@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Producto</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        .form-container {
+            width: 400px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #1b3b6f;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: #1b3b6f;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #16315a;
+        }
+
+        .link-volver {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Editar Producto</h2>
+
+        <form action="/productos/actualizar" method="POST">
+            <!-- ID oculto -->
+            <input type="hidden" name="id_producto" value="{{ producto.IdProducto }}">
+
+            <label for="codigo">Código</label>
+            <input type="text" id="codigo" name="codigo" value="{{ producto.Codigo }}" required>
+
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" value="{{ producto.Nombre }}" required>
+
+            <label for="categoria">Categoría</label>
+            <input type="text" id="categoria" name="categoria" value="{{ producto.Categoria }}">
+
+            <label for="proveedor">Proveedor</label>
+            <input type="text" id="proveedor" name="proveedor" value="{{ producto.Proveedor }}">
+
+            <label for="precio_compra">Precio de compra</label>
+            <input type="number" step="0.01" id="precio_compra" name="precio_compra"
+                   value="{{ producto.PrecioCompra }}" required>
+
+            <label for="precio_venta">Precio de venta</label>
+            <input type="number" step="0.01" id="precio_venta" name="precio_venta"
+                   value="{{ producto.PrecioVenta }}" required>
+
+            <label for="stock">Stock actual</label>
+            <input type="number" id="stock" name="stock" value="{{ producto.StockActual }}" required>
+
+            <button type="submit" class="btn">Guardar cambios</button>
+        </form>
+
+        <a href="/productos" class="link-volver">← Volver al listado</a>
+    </div>
+
+</body>
+</html>

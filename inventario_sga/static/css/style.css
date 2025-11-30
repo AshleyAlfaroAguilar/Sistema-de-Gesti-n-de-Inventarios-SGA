@@ -1,0 +1,20 @@
+/* Estilos generales */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #f4f6fb;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor centrado */
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #1b3b6f;
+}
+
+p {
+    text-align: center;
+    color: #333;
+    font-size: 1.1rem;
+}

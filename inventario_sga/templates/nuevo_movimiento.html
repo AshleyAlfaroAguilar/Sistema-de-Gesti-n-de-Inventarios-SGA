@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevo Movimiento</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        .form-container {
+            width: 450px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #1b3b6f;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        select,
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .tipo-mov {
+            margin-top: 5px;
+        }
+
+        .tipo-mov label {
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        .btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: #1b3b6f;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #16315a;
+        }
+
+        .link-volver {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Nuevo Movimiento</h2>
+
+        <form action="/movimientos/guardar" method="POST">
+
+            <label for="id_producto">Producto</label>
+            <select id="id_producto" name="id_producto" required>
+                <option value="">-- Seleccione un producto --</option>
+                {% for p in productos %}
+                    <option value="{{ p.IdProducto }}">
+                        {{ p.Codigo }} - {{ p.Nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label>Tipo de movimiento</label>
+            <div class="tipo-mov">
+                <label>
+                    <input type="radio" name="tipo_movimiento" value="ENTRADA" checked>
+                    Entrada
+                </label>
+                <label>
+                    <input type="radio" name="tipo_movimiento" value="SALIDA">
+                    Salida
+                </label>
+            </div>
+
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" name="cantidad" min="1" required>
+
+            <label for="referencia">Referencia (factura, vale, etc.)</label>
+            <input type="text" id="referencia" name="referencia">
+
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+
+            <button type="submit" class="btn">Registrar movimiento</button>
+        </form>
+
+        <a href="/productos" class="link-volver">← Volver al listado de productos</a>
+    </div>
+
+</body>
+</html>

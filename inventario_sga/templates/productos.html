@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listado de Productos</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #1b3b6f;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            color: #1b3b6f;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Listado de Productos</h2>
+
+    <div style="text-align: center; margin-bottom: 15px;">
+        <a href="/productos/nuevo"
+        style="display: inline-block; padding: 10px 20px; background-color: #1b3b6f; color: white; text-decoration: none; border-radius: 4px; font-weight: 600;">
+            + Nuevo producto
+        </a>
+        <a href="/reportes/stock-bajo" 
+        class="btn-nuevo" 
+        style="display: inline-block; padding: 10px 20px; background-color: #ff1414ff; color: white; text-decoration: none; border-radius: 4px; font-weight: 600;">
+            Ver productos con stock bajo
+        </a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Precio Compra</th>
+                <th>Precio Venta</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in productos %}
+            <tr>
+                <td>{{ p.IdProducto }}</td>
+                <td>{{ p.Codigo }}</td>
+                <td>{{ p.Nombre }}</td>
+                <td>{{ p.Categoria }}</td>
+                <td>{{ p.Proveedor }}</td>
+                <td>Q {{ "%.2f"|format(p.PrecioCompra) }}</td>
+                <td>Q {{ "%.2f"|format(p.PrecioVenta) }}</td>
+                <td>{{ p.StockActual }}</td>
+                <td>{{ 'Activo' if p.Activo == 1 else 'Inactivo' }}</td>
+                <td>
+                    {% if session.get('usuario_rol') in ['ADMIN', 'SUPERVISOR'] %}
+                    <a href="/productos/editar/{{ p.IdProducto }}"
+                        style="padding: 4px 8px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                        Editar
+                    </a>
+                    {% endif %}
+
+                    <a href="/movimientos/nuevo"
+                        style="padding: 4px 8px; background-color: #0d6efd; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem; margin-right: 5px; margin-left: 5px;">
+                        Movimiento
+                    </a>
+
+                    <a href="/movimientos/producto/{{ p.IdProducto }}"
+                        style="padding: 4px 8px; background-color: #20c997; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem; margin-right: 5px; margin-left: 5px">
+                        Movimientos
+                    </a>
+
+                    {% if session.get('usuario_rol') in ['ADMIN', 'SUPERVISOR'] %}
+                    <a href="/productos/eliminar/{{ p.IdProducto }}"
+                        onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
+                        style="padding: 4px 8px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                        Eliminar
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</body>
+</html>

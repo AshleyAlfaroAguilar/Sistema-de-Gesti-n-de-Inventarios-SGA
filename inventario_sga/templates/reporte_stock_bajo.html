@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte de Productos con Stock Bajo</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #1b3b6f;
+        }
+
+        .alerta {
+            width: 80%;
+            margin: 10px auto 15px auto;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-size: 0.95rem;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #1b3b6f;
+            color: white;
+        }
+
+        .fila-roja {
+            background-color: #f8d7da;
+        }
+
+        .link-volver {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Productos con Stock Bajo</h2>
+
+    <div class="alerta">
+        {% if productos %}
+            Se muestran los productos cuyo <strong>stock actual</strong> es 
+            menor o igual al <strong>stock mínimo</strong>. 
+            Revise estas referencias para evitar quiebres de inventario.
+        {% else %}
+            No se encontraron productos con stock bajo. 
+            El inventario se encuentra dentro de los niveles esperados.
+        {% endif %}
+    </div>
+
+    {% if productos %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Stock actual</th>
+                <th>Stock mínimo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productos %}
+            <tr class="fila-roja">
+                <td>{{ p.IdProducto }}</td>
+                <td>{{ p.Codigo }}</td>
+                <td>{{ p.Nombre }}</td>
+                <td>{{ p.Categoria }}</td>
+                <td>{{ p.Proveedor }}</td>
+                <td>{{ p.StockActual }}</td>
+                <td>{{ p.StockMinimo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <a href="/productos" class="link-volver">← Volver al listado de productos</a>
+
+</body>
+</html>

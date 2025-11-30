@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movimientos de {{ producto.Nombre }}</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        h2, h3 {
+            text-align: center;
+            color: #1b3b6f;
+        }
+
+        .info-producto {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 95%;
+            margin: 15px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #1b3b6f;
+            color: white;
+        }
+
+        .link-volver {
+            display: block;
+            text-align: center;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Historial de Movimientos</h2>
+
+    <div class="info-producto">
+        <h3>{{ producto.Codigo }} - {{ producto.Nombre }}</h3>
+        <p>Stock actual: <strong>{{ producto.StockActual }}</strong></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID Mov.</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Stock Anterior</th>
+                <th>Stock Nuevo</th>
+                <th>Fecha</th>
+                <th>Referencia</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if movimientos %}
+                {% for m in movimientos %}
+                <tr>
+                    <td>{{ m.IdMovimiento }}</td>
+                    <td>{{ m.TipoMovimiento }}</td>
+                    <td>{{ m.Cantidad }}</td>
+                    <td>{{ m.StockAnterior }}</td>
+                    <td>{{ m.StockNuevo }}</td>
+                    <td>{{ m.FechaMovimiento }}</td>
+                    <td>{{ m.Referencia }}</td>
+                    <td>{{ m.Observaciones }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8">No hay movimientos registrados para este producto.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="/productos" class="link-volver">← Volver al listado de productos</a>
+
+</body>
+</html>
